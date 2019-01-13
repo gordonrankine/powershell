@@ -35,7 +35,7 @@ function fnCreateDir {
         Param(
 
         # The directory to be created.
-        [Parameter(Mandatory=$True, Position=0, HelpMessage='This is the directory to be created. E.g. C:\Temp')]
+        [Parameter(Mandatory=$True, Position=0, HelpMessage='This is the directory to be created. E.g. C:\Test')]
         [string]$outDir
 
         )
