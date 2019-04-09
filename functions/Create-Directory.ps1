@@ -1,3 +1,5 @@
+function fnCreateDir {
+
 <#
 
 .SYNOPSIS
@@ -13,6 +15,10 @@ This is the directory to be created.
 .\Create-Directory.ps1 -outDir "c:\test"
 Creates a directory called "test" in c:\
 
+.EXAMPLE
+.\Create-Directory.ps1 -outDir "\\COMP01\c$\test"
+Creates a directory called "test" in c:\ on COMP01
+
 .LINK
 https://github.com/gordonrankine/powershell
 
@@ -21,37 +27,37 @@ https://github.com/gordonrankine/powershell
     Compatibility:      Windows 7 or Server 2008 and higher
     Author:             Gordon Rankine
     Date:               13/01/2019
-    Version:            1.0
-    PSSscriptAnalyzer   Pass
+    Version:            1.1
+    PSSscriptAnalyzer:  Pass
 
 #>
-
-Clear-Host
-
-function fnCreateDir {
 
     [CmdletBinding()]
 
         Param(
 
         # The directory to be created.
-        [Parameter(Mandatory=$True, Position=0, HelpMessage='This is the directory to be created. E.g. C:\Test')]
+        [Parameter(Mandatory=$True, Position=0, HelpMessage='This is the directory to be created. E.g. C:\Temp')]
         [string]$outDir
 
         )
 
         # Create out directory if it doesnt exist
         if(!(Test-Path -path $outDir)){
-            try{
-            New-Item $outDir -type directory -Force -ErrorAction Stop | Out-Null
-            Write-Output "[SUCCESS] Created output directory $outDir"
-            }
-            catch{
-            Write-Output "[ERROR]: There was an issue creating $outDir. Script terminated."
-            Write-Output ($_.Exception.Message)
-            Write-Output ""
+            if(($outDir -notlike "*:\*") -and ($outDir -notlike "*\\*")){
+            Write-Output "[ERROR]: $outDir is not a valid path. Script terminated."
             break
             }
+                try{
+                New-Item $outDir -type directory -Force -ErrorAction Stop | Out-Null
+                Write-Output "[SUCCESS] Created output directory $outDir"
+                }
+                catch{
+                Write-Output "[ERROR]: There was an issue creating $outDir. Script terminated."
+                Write-Output ($_.Exception.Message)
+                Write-Output ""
+                break
+                }
         }
         # Directory already exists
         else{
@@ -60,5 +66,9 @@ function fnCreateDir {
 
 } # end fnCreateDir
 
-# Example
-fnCreateDir c:\test
+Clear-Host
+
+<# Examples
+fnCreateDir "c:\temp"
+fnCreateDir "\\Comp01\c$\temp"
+#>
