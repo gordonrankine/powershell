@@ -54,7 +54,7 @@ https://github.com/gordonrankine/powershell
                 }
                 catch{
                 Write-Output "[ERROR]: There was an issue creating $outDir. Script terminated."
-                Write-Output ($_.Exception.Message)
+                Write-Output ($_.Exception.Message)
                 Write-Output ""
                 break
                 }
