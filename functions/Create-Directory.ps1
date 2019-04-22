@@ -50,7 +50,7 @@ https://github.com/gordonrankine/powershell
             }
                 try{
                 New-Item $outDir -type directory -Force -ErrorAction Stop | Out-Null
-                Write-Output "[SUCCESS] Created output directory $outDir"
+                Write-Output "[INFO] Created output directory $outDir"
                 }
                 catch{
                 Write-Output "[ERROR]: There was an issue creating $outDir. Script terminated."
