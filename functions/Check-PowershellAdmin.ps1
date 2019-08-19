@@ -27,20 +27,19 @@ https://github.com/gordonrankine/powershell
     $wBdminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
 
         if(!$wPrinCurrent.IsInRole($wBdminRole)){
-        Return "[ERROR] PowerShell is not running as administrator."
+        Write-Output "[ERROR] PowerShell is not running as administrator."
         Break
         }
 
     }
 
     catch{
-    Return "[ERROR] There was an unexpected error checking if PowerShell is running as administrator. Script terminated."
+    Write-Output "[ERROR] There was an unexpected error checking if PowerShell is running as administrator. Script terminated."
     Break
     }
 
 } # end fnCheckPSAdmin
 
 <# Examples
-$msg = fnCheckPSAdmin
-Write-Output $msg
+fnCheckPSAdmin
 #>
