@@ -10,3 +10,7 @@ Index
    - Check-PowershellAdmin.ps1 - Checks if PowerShell is running as administrator.
  - Scripts
    - No content yet.
+
+## Other Scripts
+
+- [Get-Win10Info.ps1 ](https://github.com/gordonrankine/get-win10info) - Gets information from a computer and generates a word report.
