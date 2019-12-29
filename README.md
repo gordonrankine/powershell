@@ -1,6 +1,10 @@
 # PowerShell
 
+<p><br /></p>
+
 ## Public PowerShell repo for snippets, functions and scripts.
+
+<p><br /></p>
 
 ### Snippets
 
