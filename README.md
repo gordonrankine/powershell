@@ -30,5 +30,6 @@
 
 | Name | Description |
 | :--- | :---|
-| [Get-Win10Info.ps1](https://github.com/gordonrankine/get-win10info) | Gets information from a computer and generates a word report with the information collected |
-| [Get-WinUpdatesOffline.ps1](https://github.com/gordonrankine/get-winupdatesoffline) | Gets either installed or missing Windows Updates from a computer and outputs the results to a csv report |
+| [Get-Win10Info.ps1](https://github.com/gordonrankine/get-win10info) | Gets information from a computer and generates a word report with the information collected. |
+| [Get-WinUpdatesOffline.ps1](https://github.com/gordonrankine/get-winupdatesoffline) | Gets either installed or missing Windows Updates from a computer and outputs the results to a csv report. |
+| [Install-Php.ps1](https://github.com/gordonrankine/install-php) | Installs PHP and required prerequisites on a Windows Server then configures IIS. |
