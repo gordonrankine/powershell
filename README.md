@@ -18,6 +18,7 @@
  
 | Name | Description |
 | :--- | :--- |
+| Check-PasswordComplexity.ps1 | Checks if the complexity of a password meets the given requirements |
 | Check-PowershellAdmin.ps1 | Checks if PowerShell is running as administrator or not |
 | Create-Directory.ps1 | Create a directory if it doesn't exist |
 | Get-EpochTimestamp.ps1 | Gets the current Epoch/Unix timestamp |
