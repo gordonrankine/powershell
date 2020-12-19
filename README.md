@@ -23,6 +23,7 @@
 | Create-Directory.ps1 | Create a directory if it doesn't exist |
 | Get-EpochTimestamp.ps1 | Gets the current Epoch/Unix timestamp |
 | Get-PingStatus.ps1 | Gets the ping status of an endpoint using either WMI, CMI or Native PowerShell |
+| Log-It.ps1 | Logs messages to console and log file.  |
 | Reverse-String.ps1 | Reverses a string |
 
 <p><br /><br /></p>
