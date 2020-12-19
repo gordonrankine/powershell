@@ -1,0 +1,101 @@
+function fnLogIt {
+
+<#
+.SYNOPSIS
+Outputs messages to console and file.
+
+.DESCRIPTION
+Outputs messages to console and file. INFO, WARNING & ERROR types are available.
+
+.PARAMETER message
+This is the message to be output in the console and log file.
+
+.PARAMETER type
+This is the type of message to be output, either INFO, WARNING or ERROR.
+
+.PARAMETER outDir
+This is the directory where the logfile will be created.
+
+.PARAMETER outFile
+This is the filename of the log file.
+
+.PARAMETER incException
+[OPTIONAL] This is the exception error that may be caught. Only works with -type ERROR
+
+.EXAMPLE
+fnLogIt -message "Simple info message." -type INFO -outDir "C:\temp" -outFile log.txt
+Create a message in the console and log file. Log file will be located at c:\temp\log.txt
+
+.EXAMPLE
+fnLogIt -message "Simple error message." -type ERRRO -outDir "C:\temp" -outFile log.txt -incException
+Create a message in the console and log file. Log file will be located at c:\temp\log.txt and will include any exception errors.
+This needs to be on the catch section or a try/catch block before it will work.
+
+.LINK
+https://github.com/gordonrankine/powershell
+
+.NOTES
+    License:            MIT License
+    Compatibility:      Windows 10 or Server 2019
+    Author:             Gordon Rankine
+    Date:               19/12/2020
+    Version:            1.0
+    PSSscriptAnalyzer:  Pass
+#>
+
+
+[CmdletBinding()]
+Param(
+[Parameter(Mandatory=$true, Position=0, HelpMessage="This is the message to be written to the console and log file.")]
+[string]$message,
+[Parameter(Mandatory=$true, Position=1, HelpMessage="This is the type of log entry. Only Error, Warning or Info is allowed.")]
+[ValidateSet('ERROR','WARNING','INFO')]
+[string]$type,
+[Parameter(Mandatory=$true, Position=2, HelpMessage="This is the output directory for the log file. If it does not exist it will be created providing the account running the script has the correct permissions to do so.")]
+[string]$outDir,
+[Parameter(Mandatory=$true, Position=3, HelpMessage="This is then name of the log file.")]
+[string]$outFile,
+[Parameter(Mandatory=$false, Position=4, HelpMessage="If set to Yes this will include any exception error that is caught.")]
+[ValidateSet('Yes','No')]
+[string]$incException
+)
+
+$dateSTimeL = "[" + (Get-Date -Format (Get-culture).DateTimeFormat.ShortDatePattern) + " " + (Get-Date -Format (Get-culture).DateTimeFormat.LongTimePattern) + "]"
+$type = $type.ToUpper()
+
+    if($incException -eq 'Yes' -and $type -eq 'ERROR'){
+    Write-Output "$dateSTimeL [$type] $message"
+    Write-Output "$dateSTimeL [$type] $($_.Exception.Message)."
+    $dateSTimeL + " [" + $type +"] " + $message | Out-File "$outDir\$outFile" -Append
+    $dateSTimeL + " [" + $type +"] " + $($_.Exception.Message) | Out-File "$outDir\$outFile" -Append
+    }
+    else{
+    Write-Output "$dateSTimeL [$type] $message"
+    $dateSTimeL + " [" + $type +"] " + $message | Out-File "$outDir\$outFile" -Append
+    }
+
+} #end fnLogIt
+
+# Example
+Clear-Host
+# Specify directory and file.
+$outdir = "c:\temp"
+$outFile = "log.txt"
+# Create Directory - Use https://github.com/gordonrankine/powershell/blob/master/functions/Create-Directory.ps1
+New-Item -Path $outDir -Type Directory -Force | Out-Null
+
+# Run function
+fnLogIt -message "Simple info message." -type INFO -outDir $outdir -outFile $outfile
+fnLogIt -message "Simple warning message." -type WARNING -outDir $outdir -outFile $outfile
+fnLogIt -message "Simple error message." -type ERROR -outDir $outdir -outFile $outfile
+
+    # Run function with -incException Yes.
+    # Using wrong cmdlet in this example to generate the error. (Get-Date1)
+    try{
+    fnLogIt -message "Getting date" -type INFO -outDir $outdir -outFile $outfile
+    $date =  Get-Date1 -ErrorAction SilentlyContinue
+    Write-Output $date
+    }
+    catch{
+    fnLogIt -message "Unexpected error getting date." -type ERROR -incException Yes -outDir $outdir -outFile $outfile
+    }
